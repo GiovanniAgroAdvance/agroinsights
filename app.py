@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-
+# ... Função display_lead_info ...
 def display_lead_info(lead_data):
     with st.expander(f"Dados do Lead: {lead_data['Nome Lead'].iloc[0]}", expanded=True):
         col1, col2, col3 = st.columns(3)
@@ -21,12 +21,15 @@ def display_lead_info(lead_data):
             st.write(lead_data['Desafio'].iloc[0])
             st.markdown("**Link Meetime:**")
             st.write(lead_data['Link Meetime'].iloc[0])
-        
 
 def get_data() -> pd.DataFrame:
-    return pd.read_csv(url, on_bad_lines='skip')
+    # É necessário adicionar tratamento para quando a URL ou o arquivo não está acessível
+    try:
+        return pd.read_csv(url, on_bad_lines='skip')
+    except Exception as e:
+        st.error(f"Erro ao carregar dados: {e}")
+        return pd.DataFrame()  # Retorna um DataFrame vazio em caso de erro
 
-# Configuração da página
 if __name__ == "__main__":
     st.set_page_config(
         page_title="Ligações Meetime",
@@ -38,27 +41,55 @@ if __name__ == "__main__":
     sheet_id = "1dJmgQM0P2a3VYBUR1gPjbm2qtLe5KxkAra3HbCx4Hnk"
     sheet_name = "databaseTeste"
     url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
-    df = pd.read_csv(url, dtype=str).fillna("")
+    df = get_data()
 
     st.title("Ligações Meetime")
 
-    # Ordenar os nomes dos SDRs em ordem alfabética antes de passá-los para o selectbox
-    sdrs = sorted(pd.unique(df["Nome SDR"]))
-    selected_sdr = st.sidebar.selectbox("Selecione o SDR", sdrs)
-    df_filtered_by_sdr = df[df["Nome SDR"] == selected_sdr]
+    if df.empty:
+        st.stop()  # Para a execução do app se o DataFrame estiver vazio
 
+    # Filtros na barra lateral
+    st.sidebar.title("Filtros")
+
+    # Converter a coluna de datas para o tipo datetime
+    df['Data'] = pd.to_datetime(df['Data'])
+
+    # Filtros para Data Inicial e Data Final
+    min_date = df['Data'].min().date()
+    max_date = df['Data'].max().date()
+    start_date = st.sidebar.date_input('Data Inicial', min_date)
+    end_date = st.sidebar.date_input('Data Final', max_date)
+    
+    # Converter datas selecionadas para datetime antes da comparação
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+
+    # Aplicar filtro de datas
+    df_filtered_by_date = df[(df['Data'].dt.date >= start_date.date()) & 
+                             (df['Data'].dt.date <= end_date.date())]
+
+    # Filtro SDR na barra lateral
+    sdrs = sorted(pd.unique(df_filtered_by_date["Nome SDR"]))
+    selected_sdr = st.sidebar.selectbox("Selecione o SDR", ['Todos'] + sdrs)
+
+    # Aplicar filtro de SDR se necessário
+    if selected_sdr != 'Todos':
+        df_filtered_by_sdr = df_filtered_by_date[df_filtered_by_date["Nome SDR"] == selected_sdr]
+    else:
+        df_filtered_by_sdr = df_filtered_by_date
+    
+    # Display leads se algum SDR foi selecionado
     if not df_filtered_by_sdr.empty:
-        # Ordenar os nomes dos Leads em ordem alfabética antes de passá-los para o selectbox
         leads = sorted(pd.unique(df_filtered_by_sdr["Nome Lead"]))
         selected_lead = st.sidebar.selectbox("Selecione o Lead", leads)
         df_filtered_by_lead = df_filtered_by_sdr[df_filtered_by_sdr["Nome Lead"] == selected_lead]
-
         display_lead_info(df_filtered_by_lead)
     else:
-        st.write("Nenhum dado disponível para o SDR selecionado.")
+        st.sidebar.write("Nenhum dado disponível para o SDR selecionado.")
 
-    count_df = df['Nome SDR'].value_counts().reset_index()
+    # Contagem de ligações por SDR
+    count_df = df_filtered_by_date['Nome SDR'].value_counts().reset_index()
     count_df.columns = ['Nome SDR', 'count']
 
-    fig = px.pie(count_df, names='Nome SDR', values='count', title='Porcentagem de Ligações por SDR')
+    fig = px.pie(count_df, names='Nome SDR', values='count', title='Porcentagem de Ligações Significativas Processadas por SDR')
     st.plotly_chart(fig, use_container_width=True)
