@@ -1,6 +1,7 @@
 # AGROINSIGHTS
 
-(![agroinsights GUI](https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/061e602c-27ab-4b65-a02e-23d2d91a598e)
+![agroinsights GUI](https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/0311fd7e-d7bd-493e-a740-00a2a904e9b0)
+
 
 ## Visão Geral
 
@@ -22,9 +23,12 @@ Para executar este projeto, siga as etapas abaixo:
 
 3. Inicie a aplicação:
 
-  ```bash
+   ```bash
    streamlit run app.py
-
+   
 4. Licença:
 
    Este projeto está licenciado sob a [GNU LICENSE] - veja o arquivo LICENSE.md para mais detalhes.
+
+## Interface:
+
