@@ -32,7 +32,8 @@ Para executar este projeto, siga as etapas abaixo:
 
 ## Interface:
 <div align="center">
-   <img src="https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/ed9459aa-0e2e-418b-9d23-4948ed0bcf4a">   
+   <img src="https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/51520e76-bac6-43e2-b149-19f32bbb15b5">   
 </div>
+
 
 
