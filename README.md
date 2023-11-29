@@ -31,9 +31,12 @@ Para executar este projeto, siga as etapas abaixo:
    Este projeto está licenciado sob a [GNU LICENSE] - veja o arquivo LICENSE.md para mais detalhes.
 
 ## Interface:
-
-![Tela principal](https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/1d448ccf-294e-473e-8d38-d740474694d0)
-![Filtros](https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/68204231-3c46-434c-b5d6-efb71ebbaac0)
+<div align="center">
+   <img src="https://github.com/vinidioli/Sariema_IA/assets/151926879/1d448ccf-294e-473e-8d38-d740474694d0" height="500" width="500">
+</div>
+<div align="center">
+   <img src="https://github.com/vinidioli/Sariema_IA/assets/151926879/68204231-3c46-434c-b5d6-efb71ebbaac0" height="500" width="500">   
+</div>
 
 
 
