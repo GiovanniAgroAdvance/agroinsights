@@ -32,11 +32,7 @@ Para executar este projeto, siga as etapas abaixo:
 
 ## Interface:
 <div align="center">
-   <img src="https://github.com/vinidioli/Sariema_IA/assets/151926879/1d448ccf-294e-473e-8d38-d740474694d0" height="500" width="500">
+   <img src="https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/ed9459aa-0e2e-418b-9d23-4948ed0bcf4a" height="500" width="500">   
 </div>
-<div align="center">
-   <img src="https://github.com/vinidioli/Sariema_IA/assets/151926879/68204231-3c46-434c-b5d6-efb71ebbaac0" height="500" width="500">   
-</div>
-
 
 
