@@ -25,7 +25,7 @@ def display_lead_info(lead_data):
 def get_data() -> pd.DataFrame:
     # É necessário adicionar tratamento para quando a URL ou o arquivo não está acessível
     try:
-        return pd.read_csv(url, on_bad_lines='skip')
+        return pd.read_csv(url, encoding='utf-8', on_bad_lines='skip')
     except Exception as e:
         st.error(f"Erro ao carregar dados: {e}")
         return pd.DataFrame()  # Retorna um DataFrame vazio em caso de erro
@@ -60,13 +60,10 @@ if __name__ == "__main__":
     start_date = st.sidebar.date_input('Data Inicial', min_date)
     end_date = st.sidebar.date_input('Data Final', max_date)
     
-    # Converter datas selecionadas para datetime antes da comparação
-    start_date = pd.to_datetime(start_date)
-    end_date = pd.to_datetime(end_date)
+    # Atualize a condição do filtro de datas
+    df_filtered_by_date = df[(df['Data'].dt.date >= start_date) & (df['Data'].dt.date <= end_date)]
 
-    # Aplicar filtro de datas
-    df_filtered_by_date = df[(df['Data'].dt.date >= start_date.date()) & 
-                             (df['Data'].dt.date <= end_date.date())]
+
 
     # Filtro SDR na barra lateral
     sdrs = sorted(pd.unique(df_filtered_by_date["Nome SDR"]))
@@ -80,7 +77,7 @@ if __name__ == "__main__":
     
     # Display leads se algum SDR foi selecionado
     if not df_filtered_by_sdr.empty:
-        leads = sorted(pd.unique(df_filtered_by_sdr["Nome Lead"]))
+        leads = sorted(pd.unique(df_filtered_by_sdr["Nome Lead"].dropna()))
         selected_lead = st.sidebar.selectbox("Selecione o Lead", leads)
         df_filtered_by_lead = df_filtered_by_sdr[df_filtered_by_sdr["Nome Lead"] == selected_lead]
         display_lead_info(df_filtered_by_lead)
