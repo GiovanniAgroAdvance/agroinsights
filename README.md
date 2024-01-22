@@ -5,7 +5,7 @@
 
 ## Visão Geral
 
-Este projeto visa demonstrar de maneira gráfica análises obtidas por IA das ligações realizadas pelos nossos colaboradores.
+Esse projeto visa ser uma interface para gerar análises em cima dos resultados do uso de IA nas ligações realizadas pelos colaboradores do time Comercial.
 
 ## Instalação
 
@@ -32,7 +32,8 @@ Para executar este projeto, siga as etapas abaixo:
 
 ## Interface:
 <div align="center">
-   <img src="https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/51520e76-bac6-43e2-b149-19f32bbb15b5">   
+   <img src="https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/4d977830-e372-4777-b8cd-0985e91766fe">
+   <img src="https://github.com/GiovanniAgroAdvance/agroinsights/assets/151926879/32a22fe4-89ab-423e-920c-cd164106c116">
 </div>
 
 
